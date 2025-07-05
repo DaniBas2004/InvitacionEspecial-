@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invitación</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 5%;
+            background: linear-gradient(45deg, #D2B48C, #F4A460);
+            font-family: 'Times New Roman', serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-sizing: border-box;
+        }
+
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            object-fit: cover;
+        }
+
+        .invitation-container {
+            width: 75vw;
+            max-width: 350px;
+            height: calc(75vw * 1.25);
+            max-height: 437px;
+            position: relative;
+            margin: 0 auto;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600"><defs><filter id="roughPaper"><feTurbulence baseFrequency="0.02" numOctaves="3" result="noise"/><feDisplacementMap in="SourceGraphic" in2="noise" scale="2"/></filter></defs><rect width="400" height="600" fill="%23D2B48C"/></svg>') center/cover;
+        }
+
+        .newspaper-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text x="10" y="20" font-size="8" fill="%23999" opacity="0.3">Lorem ipsum dolor sit amet consectetur</text><text x="10" y="35" font-size="8" fill="%23999" opacity="0.3">adipiscing elit sed do eiusmod tempor</text><text x="10" y="50" font-size="8" fill="%23999" opacity="0.3">incididunt ut labore et dolore magna</text><text x="10" y="65" font-size="8" fill="%23999" opacity="0.3">aliqua Ut enim ad minim veniam quis</text><text x="10" y="80" font-size="8" fill="%23999" opacity="0.3">nostrud exercitation ullamco laboris</text></svg>') repeat;
+            opacity: 0.4;
+        }
+
+        .white-paper {
+            position: absolute;
+            top: 16%;
+            left: 12%;
+            right: 12%;
+            bottom: 20%;
+            background: #FFFEF7;
+            border-radius: 0;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            padding: 6%;
+            box-sizing: border-box;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .white-paper::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            height: 20px;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 20"><path d="M0,15 Q5,5 10,15 T20,15 T30,15 T40,15 T50,15 T60,15 T70,15 T80,15 T90,15 T100,15 L100,20 L0,20 Z" fill="%23FFFEF7"/></svg>') repeat-x;
+        }
+
+        .white-paper::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: -10px;
+            right: -10px;
+            height: 20px;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 20"><path d="M0,5 Q5,15 10,5 T20,5 T30,5 T40,5 T50,5 T60,5 T70,5 T80,5 T90,5 T100,5 L100,0 L0,0 Z" fill="%23FFFEF7"/></svg>') repeat-x;
+        }
+
+        .banner {
+            position: absolute;
+            top: 4%;
+            left: -8%;
+            background: linear-gradient(45deg, #FF6B35, #F7931E);
+            color: white;
+            padding: 2% 8% 2% 6%;
+            font-weight: bold;
+            font-size: 3.8vw;
+            max-font-size: 16px;
+            transform: rotate(-5deg);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            z-index: 10;
+        }
+
+        .banner::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 0;
+            height: 0;
+            border-left: 15px solid #E85A2B;
+            border-top: 20px solid transparent;
+            border-bottom: 20px solid transparent;
+        }
+
+        .stars {
+            position: absolute;
+            top: 8%;
+            right: 5%;
+            z-index: 5;
+        }
+
+        .star {
+            display: inline-block;
+            font-size: 6vw;
+            max-font-size: 25px;
+            color: #FFD700;
+            margin-left: 1vw;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            animation: twinkle 2s ease-in-out infinite alternate;
+        }
+
+        .star:nth-child(2) {
+            animation-delay: 0.5s;
+        }
+
+        @keyframes twinkle {
+            0% {
+                opacity: 0.7;
+                transform: scale(1);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1.1);
+            }
+        }
+
+        .content {
+            text-align: center;
+            position: relative;
+            z-index: 3;
+            padding-top: 20px;
+        }
+
+        .date {
+            font-size: clamp(14px, 4vw, 16px);
+            color: #333;
+            margin-bottom: 10px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 5px;
+            display: inline-block;
+        }
+
+        .title {
+            font-size: clamp(18px, 5vw, 24px);
+            font-weight: bold;
+            color: #333;
+            margin: 20px 0;
+            letter-spacing: 1px;
+            line-height: 1.2;
+        }
+
+        .details {
+            font-size: clamp(14px, 4vw, 16px);
+            color: #333;
+            margin: 20px 0;
+            line-height: 1.6;
+        }
+
+        .location {
+            font-size: clamp(12px, 3.5vw, 14px);
+            color: #666;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+
+        .maps-link {
+            font-size: clamp(8px, 2.5vw, 10px);
+            color: #007BFF;
+            text-decoration: none;
+            display: block;
+            margin: 16px 0;
+            word-break: break-all;
+            transition: all 0.3s ease;
+        }
+
+        .maps-link:hover {
+            background-color: #808080;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            animation: rubberBand 1s;
+        }
+
+        .map-pin {
+            position: absolute;
+            right: 5%;
+            bottom: 140px;
+            color: #FF0000;
+            font-size: clamp(16px, 5vw, 24px);
+            z-index: 4;
+        }
+
+        .cta-section {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .cta-text {
+            font-size: clamp(16px, 4.5vw, 18px);
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        .cta-button {
+            background: linear-gradient(45deg, #FF8C42, #FFA500);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: clamp(12px, 3.5vw, 14px);
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 140, 66, 0.4);
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+        }
+
+        .cta-button:hover {
+            background: linear-gradient(45deg, #808080, #666666);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(128, 128, 128, 0.6);
+            animation: rubberBand 1s;
+        }
+
+        .cowboy-hat {
+            position: absolute;
+            bottom: 20px;
+            right: 5%;
+            font-size: clamp(24px, 8vw, 40px);
+            color: #D2691E;
+            transform: rotate(15deg);
+            z-index: 4;
+        }
+
+        .paper-clip {
+            position: absolute;
+            top: -5px;
+            right: 15%;
+            width: 20px;
+            height: 40px;
+            background: #C0C0C0;
+            border-radius: 10px 10px 0 0;
+            border: 2px solid #999;
+            z-index: 10;
+        }
+
+        .paper-clip::after {
+            content: '';
+            position: absolute;
+            bottom: -10%;
+            left: 10%;
+            width: 70%;
+            height: 25%;
+            background: #C0C0C0;
+            border: 2px solid #999;
+            border-top: none;
+            border-radius: 0 0 7px 7px;
+        }
+
+        /* Animaciones personalizadas para rubberBand */
+        @keyframes rubberBand {
+            from {
+                transform: scale3d(1, 1, 1);
+            }
+
+            30% {
+                transform: scale3d(1.25, 0.75, 1);
+            }
+
+            40% {
+                transform: scale3d(0.75, 1.25, 1);
+            }
+
+            50% {
+                transform: scale3d(1.15, 0.85, 1);
+            }
+
+            65% {
+                transform: scale3d(0.95, 1.05, 1);
+            }
+
+            75% {
+                transform: scale3d(1.05, 0.95, 1);
+            }
+
+            to {
+                transform: scale3d(1, 1, 1);
+            }
+        }
+
+        /* Limitar tamaños máximos en pantallas grandes */
+        @media (min-width: 400px) {
+            .banner {
+                font-size: 16px;
+            }
+
+            .star {
+                font-size: 25px;
+            }
+
+            .date {
+                font-size: 14px;
+            }
+
+            .title {
+                font-size: 20px;
+            }
+
+            .details {
+                font-size: 14px;
+            }
+
+            .location {
+                font-size: 12px;
+            }
+
+            .maps-link {
+                font-size: 8px;
+            }
+
+            .map-pin {
+                font-size: 20px;
+            }
+
+            .cta-text {
+                font-size: 15px;
+            }
+
+            .cta-button {
+                font-size: 12px;
+            }
+
+            .cowboy-hat {
+                font-size: 32px;
+            }
+
+            .paper-clip {
+                width: 16px;
+                height: 32px;
+            }
+        }
+
+        /* Media Queries simplificadas para casos extremos */
+        @media (max-width: 300px) {
+            .invitation-container {
+                width: 80vw;
+            }
+
+            .banner {
+                font-size: 3vw;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <video class="video-background animate__animated animate__bounce" autoplay muted loop playsinline>
+        <source src="./fondo  llano 1 s.mp4" type="video/mp4">
+    </video>
+
+    <div class="invitation-container animate__animated animate__bounce">
+        <!-- Fondo de periódico -->
+        <div class="newspaper-bg animate__animated animate__bounce"></div>
+
+        <!-- Banner superior -->
+        <div class="banner animate__animated animate__bounce">INVITACIÓN</div>
+
+        <!-- Estrellas -->
+        <div class="stars animate__animated animate__bounce">
+            <span class="star animate__animated animate__bounce">★</span>
+            <span class="star animate__animated animate__bounce">★</span>
+        </div>
+
+        <!-- Clip de papel -->
+        <div class="paper-clip animate__animated animate__bounce"></div>
+
+        <!-- Papel blanco principal -->
+        <div class="white-paper animate__animated animate__bounce">
+            <div class="content animate__animated animate__bounce">
+                <div class="date animate__animated animate__bounce">El día 26 a 27 de Julio</div>
+
+                <h1 class="title animate__animated animate__bounce">¡YO ALEJANDRA VEGA FESTEJO MIS 18 AÑOS!</h1>
+
+                <div class="details animate__animated animate__bounce">
+                    Te esperamos a partir de la 1:00 Pm
+                </div>
+
+                <hr style="border: 1px solid #ccc; margin: 20px 0;" class="animate__animated animate__bounce">
+
+                <div class="location animate__animated animate__bounce">
+                    Lugar: Cabalgatas Los Fundos 🐎🎶🌄
+                </div>
+
+                <a href="https://www.google.com/maps/place/Finca+Agroturismo+a+Los+Fundos/@4.2288368,-73.4169578,17z/data=!3m1!4b1!4m6!3m5!1s0x8e157f602afd0b61:0x2ecd04df859d14a0!8m2!3d4.2288368!4d-73.4169578!16s%2Fg%2F11h04nvsmy?entry=ttu&g_ep=EgoyMDI1MDYyOS4wIKXMDSoASAFQAw%3D%3D"
+                    class="maps-link animate__animated animate__bounce">
+                    Toca aquí para n llegar ! ( Finca Agroturimso "Los Fundos ")
+                </a>
+
+                <div class="cta-section animate__animated animate__bounce">
+                    <div class="cta-text animate__animated animate__bounce">CORDIALMENTE INVITADO! <br>TE ESPERAMOS !
+                    </div>
+                    <a class="cta-button animate__animated animate__bounce"
+                        href="https://wa.me/3014258340?text=Hola%20quiero%20asistir" target="_blank">
+                        304258340
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    // Detectar si es dispositivo táctil
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+    // Agregar efectos al botón
+    const button = document.querySelector('.cta-button');
+
+    if (!isTouchDevice) {
+        // Efectos hover para desktop
+        button.addEventListener('mouseenter', function () {
+            this.style.transform = 'translateY(-3px) scale(1.05)';
+        });
+
+        button.addEventListener('mouseleave', function () {
+            this.style.transform = 'translateY(0) scale(1)';
+        });
+    } else {
+        // Efectos touch para móviles
+        button.addEventListener('touchstart', function () {
+            this.style.transform = 'translateY(-2px) scale(1.03)';
+        });
+
+        button.addEventListener('touchend', function () {
+            this.style.transform = 'translateY(0) scale(1)';
+        });
+    }
+
+    // Efecto de papel arrugado al hacer click/touch
+    const paper = document.querySelector('.white-paper');
+    const paperEffect = function () {
+        paper.style.transform = 'scale(0.98)';
+        paper.style.transition = 'transform 0.15s ease';
+        setTimeout(() => {
+            paper.style.transform = 'scale(1)';
+        }, 150);
+    };
+
+    paper.addEventListener('click', paperEffect);
+    paper.addEventListener('touchstart', paperEffect);
+
+    // Animaciones para las estrellas
+    const stars = document.querySelectorAll('.star');
+    stars.forEach((star, index) => {
+        if (!isTouchDevice) {
+            // Hover para desktop
+            star.addEventListener('mouseenter', function () {
+                this.style.transform = 'scale(1.3) rotate(180deg)';
+                this.style.transition = 'transform 0.3s ease';
+            });
+
+            star.addEventListener('mouseleave', function () {
+                this.style.transform = 'scale(1) rotate(0deg)';
+            });
+        } else {
+            // Touch para móviles
+            star.addEventListener('touchstart', function () {
+                this.style.transform = 'scale(1.2) rotate(90deg)';
+                this.style.transition = 'transform 0.2s ease';
+            });
+
+            star.addEventListener('touchend', function () {
+                setTimeout(() => {
+                    this.style.transform = 'scale(1) rotate(0deg)';
+                }, 200);
+            });
+        }
+    });
+
+    // Ajustar tamaño de fuente dinámicamente
+    function adjustFontSize() {
+        const container = document.querySelector('.invitation-container');
+        const containerWidth = container.offsetWidth;
+        const containerHeight = container.offsetHeight;
+
+        // Calcular factor de escala basado en el tamaño del contenedor
+        const scaleFactor = Math.min(containerWidth / 400, containerHeight / 600);
+
+        if (scaleFactor < 1) {
+            // Solo aplicar si necesita reducir
+            const title = document.querySelector('.title');
+            const originalFontSize = window.getComputedStyle(title).fontSize;
+            const currentSize = parseFloat(originalFontSize);
+
+            if (containerWidth < 350) {
+                title.style.fontSize = Math.max(14, currentSize * 0.9) + 'px';
+            }
+        }
+    }
+
+    // Ajustar al cargar y al cambiar orientación
+    window.addEventListener('load', adjustFontSize);
+    window.addEventListener('orientationchange', function () {
+        setTimeout(adjustFontSize, 100);
+    });
+    window.addEventListener('resize', adjustFontSize);
+
+    // Prevenir zoom en inputs en iOS
+    const metaViewport = document.querySelector('meta[name="viewport"]');
+    if (metaViewport) {
+        metaViewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
+    }
+
+    // Mejorar rendimiento en dispositivos móviles
+    if (isTouchDevice) {
+        // Reducir animaciones en móviles para mejor rendimiento
+        const styleSheet = document.createElement('style');
+        styleSheet.textContent = `
+                * {
+                    -webkit-transform: translateZ(0);
+                    transform: translateZ(0);
+                }
+                
+                .star {
+                    animation-duration: 3s;
+                }
+            `;
+        document.head.appendChild(styleSheet);
+    }
+</script>
+</body>
+
+</html>
